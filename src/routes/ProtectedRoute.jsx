@@ -1,0 +1,13 @@
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext.jsx";
+
+export default function ProtectedRoute({ children }) {
+  const { user } = useAuth();
+  const hasToken = Boolean(localStorage.getItem("crm_token"));
+
+  if (!user && !hasToken) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+}
